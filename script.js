@@ -36,5 +36,48 @@ function calcularPrecioFinal(precio, descuento){
    
     console.log(`El precio final después
         del descuento es: $${precioFinal}`);
-       prompt(precioFinal)
+       alert(precioFinal)
+
+       const producto = {
+        nombre: 'Camiseta',
+        marca: 'Nike',
+        precio: 29.99,
+        disponible: true
+      };
+      console.log(producto.nombre); 
+console.log(producto.marca); 
+
+const productos = ['Camiseta', 'Pantalón', 'Vestido', 'Zapatos'];
+console.log(productos[0]); 
+console.log(productos[1]); 
+productos.push('Calcetines');
+productos.splice(2, 1); 
+
+const posicion = productos.indexOf('Vestido');
+console.log(posicion); 
+const productosFiltrados = productos.filter(producto => producto.includes('Ca'));
+console.log(productosFiltrados); 
+
+function agregarAlCarrito(producto) {
+    
+    const productoExistente = carrito.find((item) => item.id === producto.id);
+  
+   
+    if (productoExistente) {
+      productoExistente.cantidad++;
+    } else {
+     
+      carrito.push({ ...producto, cantidad: 1 });
+    }
+    actualizarCarrito();
+  }
+  
+  const indumentaria = {
+    nombre: 'Camiseta',
+    marca: 'Nike',
+    precio: 29.99,
+    disponible: true
+  };
+  console.log(indumentaria.nombre);
+console.log(indumentaria.marca);
 
