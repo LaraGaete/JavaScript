@@ -71,6 +71,28 @@ function agregarAlCarrito(producto) {
     }
     actualizarCarrito();
   }
+
+  var carrito = [
+    { nombre: 'Camiseta', precio: 20, talla: 'M', color: 'Rojo', cantidad: 2 },
+    { nombre: 'Pantalón', precio: 40, talla: 'L', color: 'Negro', cantidad: 1 },
+    
+  ];
+  
+
+  function mostrarCarrito() {
+    console.log('Contenido del carrito:');
+    for (var i = 0; i < carrito.length; i++) {
+      var producto = carrito[i];
+      console.log('Nombre: ' + producto.nombre);
+      console.log('Precio: ' + producto.precio);
+      console.log('Talla: ' + producto.talla);
+      console.log('Color: ' + producto.color);
+      console.log('Cantidad: ' + producto.cantidad);
+      console.log('---------------------------');
+    }
+  }
+  
+  mostrarCarrito();
   
   const indumentaria = {
     nombre: 'Camiseta',
