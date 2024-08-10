@@ -1,115 +1,113 @@
-let montoCompra = 150;
-let descuento = 0;
+let productos = [
+    { id: 1, nombre: 'Camiseta Nike Mujer', marca: 'Nike', precio: 20000, imagen: 'imagenes/remeramujer.jpg', categoria: 'mujer', disponible: true },
+    { id: 2, nombre: 'Pantalón Nike Mujer', marca: 'Nike', precio: 35000, imagen: 'imagenes/pantalonmujer.jpg', categoria: 'mujer', disponible: true },
+    { id: 3, nombre: 'Chaqueta Nike Mujer', marca: 'Nike', precio: 60000, imagen: 'imagenes/camperamujer.jpg', categoria: 'mujer', disponible: true },
+    { id: 4, nombre: 'Sudadera Nike Mujer', marca: 'Nike', precio: 55000, imagen: 'imagenes/buzomujer.jpg', categoria: 'mujer', disponible: true },
+    { id: 5, nombre: 'Camiseta Nike Hombre', marca: 'Nike', precio: 20000, imagen: 'imagenes/remerahombre.jpg', categoria: 'hombre', disponible: true },
+    { id: 6, nombre: 'Pantalón Nike Hombre', marca: 'Nike', precio: 40000, imagen: 'imagenes/pantalonhombre.jpg', categoria: 'hombre', disponible: true },
+    { id: 7, nombre: 'Chaqueta Nike Hombre', marca: 'Nike', precio: 70000, imagen: 'imagenes/camperahombre.jpg', categoria: 'hombre', disponible: true },
+    { id: 8, nombre: 'Sudadera Nike Hombre', marca: 'Nike', precio: 65000, imagen: 'imagenes/buzohombre.jpg', categoria: 'hombre', disponible: true },
+    { id: 9, nombre: 'Camiseta Nike Niños', marca: 'Nike', precio: 15000, imagen: 'imagenes/remeraniños.jpg', categoria: 'ninos', disponible: true },
+    { id: 10, nombre: 'Pantalón Nike Niños', marca: 'Nike', precio: 30000, imagen: 'imagenes/pantalonniños.jpg', categoria: 'ninos', disponible: true },
+    { id: 11, nombre: 'Sudadera Nike Niños', marca: 'Nike', precio: 45000, imagen: 'imagenes/buzoniños.jpg', categoria: 'ninos', disponible: true },
+    { id: 12, nombre: 'Zapatillas Nike Niños', marca: 'Nike', precio: 90000, imagen: 'imagenes/zapasniños.jpg', categoria: 'ninos', disponible: true },
+];
 
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-if (montoCompra > 100) {
-    descuento = montoCompra * 0.1;
+function agregarAlCarrito(productId) {
+    const producto = productos.find(item => item.id === productId);
+    if (producto) {
+        const productoExistente = carrito.find(item => item.id === producto.id);
+        
+        if (!productoExistente) {
+            carrito.push({ ...producto, cantidad: 1 });
+        } else {
+            productoExistente.cantidad += 1; 
+        }
+        
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        actualizarContadorCarrito(); 
+        mostrarCarrito(); 
+    }
 }
 
-console.log("Monto de la compra: $" + montoCompra);
-console.log("Descuento aplicado: $" + descuento);
-
-
-let cantidadIteraciones = 5;
-for (let i = 1; i <= cantidadIteraciones; i++) {
-    console.log("Iteración número: " + i);
-}
-console.log("Ciclo finalizado");
-
-
-function calcularPrecioFinal(precio, descuento) {
-    let descuentoDecimal = descuento / 100;
-    let montoDescuento = precio * descuentoDecimal;
-    let precioFinal = precio - montoDescuento;
-    return precioFinal.toFixed(2);
-}
-
-
-let precioProducto = parseFloat(prompt("Ingrese precio del producto"));
-let porcentajeDescuento = parseFloat(prompt("Ingrese porcentaje de descuento"));
-
-
-let precioFinal = calcularPrecioFinal(precioProducto, porcentajeDescuento);
-console.log(`El precio final después del descuento es: $${precioFinal}`);
-alert(precioFinal);
-
-
-const producto = {
-    nombre: 'Camiseta',
-    marca: 'Nike',
-    precio: 29.99,
-    disponible: true
-};
-
-console.log(producto.nombre);
-console.log(producto.marca);
-
-
-const productos = ['Camiseta', 'Pantalón', 'Vestido', 'Zapatos'];
-console.log(productos[0]);
-console.log(productos[1]);
-
-
-productos.push('Calcetines');
-productos.splice(2, 1); 
-
-const posicion = productos.indexOf('Vestido');
-console.log(posicion); 
-
-const productosFiltrados = productos.filter(item => item.includes('Ca'));
-console.log(productosFiltrados);
-
-
-let carrito = [];
-
-function agregarAlCarrito(producto) {
-    const productoExistente = carrito.find(item => item.id === producto.id);
+function actualizarContenidoCarrito() {
+    const contenidoCarrito = document.getElementById('contenidoCarrito');
+    contenidoCarrito.innerHTML = '';
     
-    if (productoExistente) {
-        
-        carrito = carrito.map(item => 
-            item.id === producto.id 
-                ? { ...item, cantidad: item.cantidad + 1 } 
-                : item
-        );
-    } else {
-        
-        carrito.push({ ...producto, cantidad: 1 });
+    if (carrito.length === 0) {
+        contenidoCarrito.innerHTML = '<p>El carrito está vacío.</p>';
+        return;
     }
     
-    console.log(`Producto agregado: ${producto.nombre}`);
-    console.log('Carrito actual:', carrito);
-}
-
-
-const producto1 = { id: 1, nombre: 'Camiseta', precio: 20 };
-const producto2 = { id: 2, nombre: 'Pantalón', precio: 30 };
-
-agregarAlCarrito(producto1);
-agregarAlCarrito(producto2);
-agregarAlCarrito(producto1);
-
-
-function mostrarCarrito() {
-    console.log('Contenido del carrito:');
     carrito.forEach(producto => {
-        console.log('Nombre: ' + producto.nombre);
-        console.log('Precio: $' + producto.precio);
-        console.log('Cantidad: ' + producto.cantidad);
-        console.log('---------------------------');
+        contenidoCarrito.innerHTML += `
+            <div class="producto-carrito">
+                <strong>Nombre:</strong> ${producto.nombre} <br>
+                <strong>Precio:</strong> $${producto.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} <br>
+                <strong>Cantidad:</strong> ${producto.cantidad} <br>
+                <hr>
+            </div>
+        `;
     });
 }
 
-mostrarCarrito();
+function actualizarContadorCarrito() {
+    const contadorCarrito = document.getElementById('contadorCarrito');
+    const totalCantidad = carrito.reduce((total, item) => total + item.cantidad, 0);
+    contadorCarrito.textContent = totalCantidad; 
+}
 
+function mostrarProductos(categoria) {
+    const contenedorProductos = document.getElementById('productos');
+    contenedorProductos.innerHTML = '';
+    
+    let productosFiltrados = categoria === 'menu' ? productos : productos.filter(p => p.categoria === categoria);
+    
+    productosFiltrados.forEach(producto => {
+        const div = document.createElement('div');
+        div.classList.add('producto');
+        div.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <strong>${producto.nombre}</strong> - $${producto.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+            <button onclick='agregarAlCarrito(${producto.id})'>Agregar al carrito</button>
+        `;
+        contenedorProductos.appendChild(div);
+    });
+}
 
-const indumentaria = {
-    nombre: 'Camiseta',
-    marca: 'Nike',
-    precio: 29.99,
-    disponible: true
-};
+function mostrarMetodoPago() {
+    document.getElementById('metodoPago').style.display = 'block';
+    document.getElementById('productos').innerHTML = '';
+}
 
-console.log(indumentaria.nombre);
-console.log(indumentaria.marca);
+function mostrarCarrito() {
+    const carritoDiv = document.getElementById('carrito');
+    carritoDiv.style.display = 'block'; 
+    actualizarContenidoCarrito(); 
+}
 
+document.getElementById('buscarBtn').addEventListener('click', () => {
+    const busqueda = document.getElementById('buscador').value.toLowerCase();
+    const resultados = productos.filter(producto => producto.nombre.toLowerCase().includes(busqueda));
+    const contenedorProductos = document.getElementById('productos');
+    contenedorProductos.innerHTML = '';
+    resultados.forEach(producto => {
+        const div = document.createElement('div');
+        div.classList.add('producto');
+        div.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <strong>${producto.nombre}</strong> - $${producto.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+            <button onclick='agregarAlCarrito(${producto.id})'>Agregar al carrito</button>
+        `;
+        contenedorProductos.appendChild(div);
+    });
+});
+
+document.getElementById('confirmarPagoBtn').addEventListener('click', () => {
+    const metodoSeleccionado = document.getElementById('metodoPagoSelect').value;
+    alert(`Pago confirmado con el método: ${metodoSeleccionado}`);
+});
+
+mostrarProductos('menu');

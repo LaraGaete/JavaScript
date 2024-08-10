@@ -3,9 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tienda de Ropa - Nike</title>
+    
+    <!-- Incluir Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <header>
+        <div class="logo">
+            <h1>Tienda de Ropa - Snoop </h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="mostrarProductos('menu')">Menú</a></li>
+                <li><a href="#" onclick="mostrarProductos('mujer')">Mujer</a></li>
+                <li><a href="#" onclick="mostrarProductos('hombre')">Hombre</a></li>
+                <li><a href="#" onclick="mostrarProductos('ninos')">Niños</a></li>
+                <li><a href="#" onclick="mostrarMetodoPago()">Pagar</a></li>
+            </ul>
+        </nav>
+        <div class="buscador">
+            <input type="text" id="buscador" placeholder="Buscar productos...">
+            <button id="buscarBtn">🔍</button>
+        </div>
+        <div class="carrito-container">
+            <button id="mostrarCarritoBtn" onclick="mostrarCarrito()">
+                <i class="fa-solid fa-cart-shopping"></i> <!-- Ícono de carrito de compras -->
+                <span id="contadorCarrito">0</span>
+            </button>
+        </div>
+    </header>
+    
+    <div class="container" id="productos"></div>
+    
+    <div id="metodoPago" style="display: none;">
+        <h2>Selecciona tu Método de Pago</h2>
+        <select id="metodoPagoSelect">
+            <option value="efectivo">Efectivo</option>
+            <option value="debito">Tarjeta de Débito</option>
+            <option value="credito">Tarjeta de Crédito</option>
+            <option value="mercado_pago">Mercado Pago</option>
+        </select>
+        <button id="confirmarPagoBtn">Confirmar Pago</button>
+    </div>
+    
+    <div id="carrito" style="display: none;">
+        <h2>Carrito</h2>
+        <div id="contenidoCarrito"></div>
+    </div>
+    
+    <footer>
+        <div class="contacto">
+            <h2>Contáctanos</h2>
+            <p>Email: Tiendasnoop@gmail.com</p>
+            <p>Dirección: Av Snoop 567, Cordoba,Argentina</p>
+        </div>
+        <div class="metodos-pago">
+            <h2>Métodos de Pago</h2>
+            <p>Aceptamos: Efectivo, Tarjetas de Débito, Tarjetas de Crédito, Mercado Pago</p>
+        </div>
+        <div class="redes-sociales">
+            <h2>Síguenos en Redes Sociales</h2>
+            <a href="#">Facebook</a> | 
+            <a href="#">Instagram</a> | 
+            <a href="#">Twitter</a>
+        </div>
+        <p>&copy; 2023 Tienda de Ropa Snoop. Todos los derechos reservados.</p>
+    </footer>
+    
     <script src="./script.js"></script>
 </body>
 </html>
