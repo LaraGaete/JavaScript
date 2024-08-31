@@ -1,19 +1,16 @@
-let productos = [
-    { id: 1, nombre: 'Camiseta Nike Mujer', marca: 'Nike', precio: 20000, imagen: 'imagenes/remeramujer.jpg', categoria: 'mujer', disponible: true },
-    { id: 2, nombre: 'Pantalón Nike Mujer', marca: 'Nike', precio: 35000, imagen: 'imagenes/pantalonmujer.jpg', categoria: 'mujer', disponible: true },
-    { id: 3, nombre: 'Chaqueta Nike Mujer', marca: 'Nike', precio: 60000, imagen: 'imagenes/camperamujer.jpg', categoria: 'mujer', disponible: true },
-    { id: 4, nombre: 'Sudadera Nike Mujer', marca: 'Nike', precio: 55000, imagen: 'imagenes/buzomujer.jpg', categoria: 'mujer', disponible: true },
-    { id: 5, nombre: 'Camiseta Nike Hombre', marca: 'Nike', precio: 20000, imagen: 'imagenes/remerahombre.jpg', categoria: 'hombre', disponible: true },
-    { id: 6, nombre: 'Pantalón Nike Hombre', marca: 'Nike', precio: 40000, imagen: 'imagenes/pantalonhombre.jpg', categoria: 'hombre', disponible: true },
-    { id: 7, nombre: 'Chaqueta Nike Hombre', marca: 'Nike', precio: 70000, imagen: 'imagenes/camperahombre.jpg', categoria: 'hombre', disponible: true },
-    { id: 8, nombre: 'Sudadera Nike Hombre', marca: 'Nike', precio: 65000, imagen: 'imagenes/buzohombre.jpg', categoria: 'hombre', disponible: true },
-    { id: 9, nombre: 'Camiseta Nike Niños', marca: 'Nike', precio: 15000, imagen: 'imagenes/remeraniños.jpg', categoria: 'ninos', disponible: true },
-    { id: 10, nombre: 'Pantalón Nike Niños', marca: 'Nike', precio: 30000, imagen: 'imagenes/pantalonniños.jpg', categoria: 'ninos', disponible: true },
-    { id: 11, nombre: 'Sudadera Nike Niños', marca: 'Nike', precio: 45000, imagen: 'imagenes/buzoniños.jpg', categoria: 'ninos', disponible: true },
-    { id: 12, nombre: 'Zapatillas Nike Niños', marca: 'Nike', precio: 90000, imagen: 'imagenes/zapasniños.jpg', categoria: 'ninos', disponible: true },
-];
-
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+let productos = []; // Inicializamos una variable para almacenar productos en el ámbito global
+
+async function cargarProductos() {
+    try {
+        const response = await axios.get('productos.json'); // Asegúrate de que la ruta sea correcta.
+        productos = response.data; // Guardamos los productos globalmente
+        return productos; // Retornamos los productos
+    } catch (error) {
+        console.error("Error al cargar los productos:", error);
+        return [];
+    }
+}
 
 function agregarAlCarrito(productId) {
     const producto = productos.find(item => item.id === productId);
@@ -28,11 +25,18 @@ function agregarAlCarrito(productId) {
         
         localStorage.setItem('carrito', JSON.stringify(carrito));
         actualizarContadorCarrito(); 
-        mostrarCarrito(); 
+        mostrarContenidoCarrito(); 
     }
 }
 
-function actualizarContenidoCarrito() {
+function eliminarDelCarrito(productId) {
+    carrito = carrito.filter(item => item.id !== productId);
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    actualizarContadorCarrito();
+    mostrarContenidoCarrito(); // Actualizar el contenido del carrito
+}
+
+function mostrarContenidoCarrito() {
     const contenidoCarrito = document.getElementById('contenidoCarrito');
     contenidoCarrito.innerHTML = '';
     
@@ -47,9 +51,19 @@ function actualizarContenidoCarrito() {
                 <strong>Nombre:</strong> ${producto.nombre} <br>
                 <strong>Precio:</strong> $${producto.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} <br>
                 <strong>Cantidad:</strong> ${producto.cantidad} <br>
+                <button class="eliminar-btn" data-id="${producto.id}">Eliminar</button>
                 <hr>
             </div>
         `;
+    });
+
+    // Asignar eventos de clic a los botones de eliminar
+    const botonesEliminar = document.querySelectorAll('.eliminar-btn');
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener('click', (event) => {
+            const id = parseInt(event.target.getAttribute('data-id'));
+            eliminarDelCarrito(id); // Llama a la función con el ID del producto
+        });
     });
 }
 
@@ -59,21 +73,28 @@ function actualizarContadorCarrito() {
     contadorCarrito.textContent = totalCantidad; 
 }
 
-function mostrarProductos(categoria) {
+function mostrarProductos(productos) {
     const contenedorProductos = document.getElementById('productos');
     contenedorProductos.innerHTML = '';
     
-    let productosFiltrados = categoria === 'menu' ? productos : productos.filter(p => p.categoria === categoria);
-    
-    productosFiltrados.forEach(producto => {
+    productos.forEach(producto => {
         const div = document.createElement('div');
         div.classList.add('producto');
         div.innerHTML = `
             <img src="${producto.imagen}" alt="${producto.nombre}">
             <strong>${producto.nombre}</strong> - $${producto.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-            <button onclick='agregarAlCarrito(${producto.id})'>Agregar al carrito</button>
+            <button class="agregar-btn" data-id="${producto.id}">Agregar al carrito</button>
         `;
         contenedorProductos.appendChild(div);
+    });
+    
+    // Asignar eventos de clic a los botones "Agregar al carrito"
+    const botonesAgregar = document.querySelectorAll('.agregar-btn');
+    botonesAgregar.forEach(boton => {
+        boton.addEventListener('click', (event) => {
+            const id = parseInt(event.target.getAttribute('data-id'));
+            agregarAlCarrito(id);  // Llama a la función con el ID del producto
+        });
     });
 }
 
@@ -83,26 +104,49 @@ function mostrarMetodoPago() {
 }
 
 function mostrarCarrito() {
-    const carritoDiv = document.getElementById('carrito');
-    carritoDiv.style.display = 'block'; 
-    actualizarContenidoCarrito(); 
+    const carritoModal = document.getElementById('carritoModal');
+    carritoModal.style.display = 'block'; 
+    mostrarContenidoCarrito(); 
 }
 
-document.getElementById('buscarBtn').addEventListener('click', () => {
+document.getElementById('closeModal').onclick = function() {
+    document.getElementById('carritoModal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('carritoModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+}
+
+document.getElementById('menuBtn').addEventListener('click', async () => {
+    const productos = await cargarProductos();
+    mostrarProductos(productos);
+});
+
+document.getElementById('mujerBtn').addEventListener('click', async () => {
+    const productos = await cargarProductos();
+    mostrarProductos(productos.filter(p => p.categoria === 'mujer'));
+});
+
+document.getElementById('hombreBtn').addEventListener('click', async () => {
+    const productos = await cargarProductos();
+    mostrarProductos(productos.filter(p => p.categoria === 'hombre'));
+});
+
+document.getElementById('ninosBtn').addEventListener('click', async () => {
+    const productos = await cargarProductos();
+    mostrarProductos(productos.filter(p => p.categoria === 'ninos'));
+});
+
+document.getElementById('pagarBtn').addEventListener('click', mostrarMetodoPago);
+document.getElementById('mostrarCarritoBtn').addEventListener('click', mostrarCarrito);
+document.getElementById('buscarBtn').addEventListener('click', async () => {
     const busqueda = document.getElementById('buscador').value.toLowerCase();
+    const productos = await cargarProductos();
     const resultados = productos.filter(producto => producto.nombre.toLowerCase().includes(busqueda));
-    const contenedorProductos = document.getElementById('productos');
-    contenedorProductos.innerHTML = '';
-    resultados.forEach(producto => {
-        const div = document.createElement('div');
-        div.classList.add('producto');
-        div.innerHTML = `
-            <img src="${producto.imagen}" alt="${producto.nombre}">
-            <strong>${producto.nombre}</strong> - $${producto.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-            <button onclick='agregarAlCarrito(${producto.id})'>Agregar al carrito</button>
-        `;
-        contenedorProductos.appendChild(div);
-    });
+    mostrarProductos(resultados);
 });
 
 document.getElementById('confirmarPagoBtn').addEventListener('click', () => {
@@ -110,4 +154,8 @@ document.getElementById('confirmarPagoBtn').addEventListener('click', () => {
     alert(`Pago confirmado con el método: ${metodoSeleccionado}`);
 });
 
-mostrarProductos('menu');
+// Cargar productos al inicio
+document.addEventListener('DOMContentLoaded', async () => {
+    const productos = await cargarProductos();
+    mostrarProductos(productos);
+});

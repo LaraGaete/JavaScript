@@ -1,0 +1,14 @@
+[
+    { "id": 1, "nombre": "Camiseta Mujer", "marca": "Nike", "precio": 20000, "imagen": "imagenes/remeramujer.jpg", "categoria": "mujer", "disponible": true },
+    { "id": 2, "nombre": "Pantalón Mujer", "marca": "Nike", "precio": 35000, "imagen": "imagenes/pantalonmujer.jpg", "categoria": "mujer", "disponible": true },
+    { "id": 3, "nombre": "Chaqueta Mujer", "marca": "Nike", "precio": 60000, "imagen": "imagenes/camperamujer.jpg", "categoria": "mujer", "disponible": true },
+    { "id": 4, "nombre": "Sudadera Mujer", "marca": "Nike", "precio": 55000, "imagen": "imagenes/buzomujer.jpg", "categoria": "mujer", "disponible": true },
+    { "id": 5, "nombre": "Camiseta Hombre", "marca": "Nike", "precio": 20000, "imagen": "imagenes/remerahombre.jpg", "categoria": "hombre", "disponible": true },
+    { "id": 6, "nombre": "Pantalón Hombre", "marca": "Nike", "precio": 40000, "imagen": "imagenes/pantalonhombre.jpg", "categoria": "hombre", "disponible": true },
+    { "id": 7, "nombre": "Chaqueta Hombre", "marca": "Nike", "precio": 70000, "imagen": "imagenes/camperahombre.jpg", "categoria": "hombre", "disponible": true },
+    { "id": 8, "nombre": "Sudadera Hombre", "marca": "Nike", "precio": 65000, "imagen": "imagenes/buzohombre.jpg", "categoria": "hombre", "disponible": true },
+    { "id": 9, "nombre": "Camiseta Niños", "marca": "Nike", "precio": 15000, "imagen": "imagenes/remeraniños.jpg", "categoria": "ninos", "disponible": true },
+    { "id": 10, "nombre": "Pantalón Niños", "marca": "Nike", "precio": 30000, "imagen": "imagenes/pantalonniños.jpg", "categoria": "ninos", "disponible": true },
+    { "id": 11, "nombre": "Sudadera Niños", "marca": "Nike", "precio": 45000, "imagen": "imagenes/buzoniños.jpg", "categoria": "ninos", "disponible": true },
+    { "id": 12, "nombre": "Zapatillas Niños", "marca": "Nike", "precio": 90000, "imagen": "imagenes/zapasniños.jpg", "categoria": "ninos", "disponible": true }
+]

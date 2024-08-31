@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda de Ropa - Nike</title>
-    
-   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <header>
         <div class="logo">
-            <h1>Tienda de Ropa - Snoop </h1>
+            <h1>Tienda de Ropa - Snoop</h1>
         </div>
         <nav>
             <ul>
-                <li><a href="#" onclick="mostrarProductos('menu')">Menú</a></li>
-                <li><a href="#" onclick="mostrarProductos('mujer')">Mujer</a></li>
-                <li><a href="#" onclick="mostrarProductos('hombre')">Hombre</a></li>
-                <li><a href="#" onclick="mostrarProductos('ninos')">Niños</a></li>
-                <li><a href="#" onclick="mostrarMetodoPago()">Pagar</a></li>
+                <li><a href="#" id="menuBtn">Menú</a></li>
+                <li><a href="#" id="mujerBtn">Mujer</a></li>
+                <li><a href="#" id="hombreBtn">Hombre</a></li>
+                <li><a href="#" id="ninosBtn">Niños</a></li>
+                <li><a href="#" id="pagarBtn">Pagar</a></li>
             </ul>
         </nav>
         <div class="buscador">
@@ -29,15 +28,15 @@
             <button id="buscarBtn">🔍</button>
         </div>
         <div class="carrito-container">
-            <button id="mostrarCarritoBtn" onclick="mostrarCarrito()">
-                <i class="fa-solid fa-cart-shopping"></i> 
+            <button id="mostrarCarritoBtn">
+                <i class="fa-solid fa-cart-shopping"></i>
                 <span id="contadorCarrito">0</span>
             </button>
         </div>
     </header>
-    
+
     <div class="container" id="productos"></div>
-    
+
     <div id="metodoPago" style="display: none;">
         <h2>Selecciona tu Método de Pago</h2>
         <select id="metodoPagoSelect">
@@ -48,17 +47,20 @@
         </select>
         <button id="confirmarPagoBtn">Confirmar Pago</button>
     </div>
-    
-    <div id="carrito" style="display: none;">
-        <h2>Carrito</h2>
-        <div id="contenidoCarrito"></div>
+
+    <div id="carritoModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Carrito</h2>
+            <div id="contenidoCarrito"></div>
+        </div>
     </div>
-    
+
     <footer>
         <div class="contacto">
             <h2>Contáctanos</h2>
             <p>Email: Tiendasnoop@gmail.com</p>
-            <p>Dirección: Av Snoop 567, Cordoba,Argentina</p>
+            <p>Dirección: Av Snoop 567, Cordoba, Argentina</p>
         </div>
         <div class="metodos-pago">
             <h2>Métodos de Pago</h2>
@@ -66,13 +68,14 @@
         </div>
         <div class="redes-sociales">
             <h2>Síguenos en Redes Sociales</h2>
-            <a href="#">Facebook</a> | 
-            <a href="#">Instagram</a> | 
+            <a href="#">Facebook</a> |
+            <a href="#">Instagram</a> |
             <a href="#">Twitter</a>
         </div>
         <p>&copy; 2024 Tienda de Ropa Snoop. Todos los derechos reservados.</p>
     </footer>
-    
+
     <script src="./script.js"></script>
 </body>
 </html>
+

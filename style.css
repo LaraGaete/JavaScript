@@ -1,4 +1,4 @@
-body { 
+body{
     font-family: 'Arial', sans-serif; 
     margin: 0; 
     padding: 0; 
@@ -7,31 +7,13 @@ body {
 }
 
 header { 
-    background: rgba(17, 17, 17, 0.8); 
+    background: rgba(17, 17, 17, 0.9); 
     color: #fff; 
     padding: 15px; 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-}
-
-#contenidoCarrito {
-    margin-top: 20px;
-}
-
-.producto-carrito {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.producto-carrito strong {
-    color: #333;
-}
-.logo { 
-    font-size: 28px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 nav {
@@ -42,42 +24,58 @@ nav ul {
     list-style: none; 
     display: flex; 
     justify-content: center; 
+    padding: 0;
 }
 
 nav ul li {
-    margin: 0 20px;
+    margin: 0 15px;
 }
 
 nav ul li a {
     color: #fff; 
     text-decoration: none; 
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 5px;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 nav ul li a:hover {
     background: #ff4c00; 
+    transform: scale(1.05);
 }
 
 .buscador { 
     display: flex; 
+    align-items: center; 
+    margin-left: 20px; 
 }
 
 .buscador input { 
     padding: 10px; 
     margin-right: 5px; 
     border-radius: 5px; 
-    border: none; 
+    border: 1px solid #ccc; 
+    transition: border-color 0.3s;
+}
+
+.buscador input:focus {
+    border-color: #ff4c00; 
+    outline: none; 
 }
 
 .buscador button { 
-    padding: 10px; 
+    padding: 10px 15px; 
     border: none; 
     background: #ff4c00; 
     color: white; 
     border-radius: 5px; 
     cursor: pointer; 
+    transition: background 0.3s, transform 0.2s;
+}
+
+.buscador button:hover { 
+    background: #e04300; 
+    transform: scale(1.05);
 }
 
 .carrito-container { 
@@ -109,64 +107,108 @@ nav ul li a:hover {
     background: rgba(255, 255, 255, 0.9); 
     margin: 20px; 
     padding: 20px; 
-    border-radius: 5px; 
-    box-shadow: 0 0 15px rgba(0,0,0,0.3); 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
     width: calc(25% - 40px);
     transition: transform 0.2s;
+    text-align: center; 
+}
+
+.producto img { 
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 10px; 
 }
 
 .producto:hover {
     transform: scale(1.05);
 }
 
-.producto img { 
-    max-width: 100%; 
-    height: auto; 
-    border-radius: 5px;
+#metodoPago {
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin: 20px 0;
 }
 
-.producto strong {
-    color: black; 
+#metodoPago h2 {
+    margin-bottom: 15px;
+    color: #333;
 }
 
-button { 
-    background: #ff4c00; 
-    color: #fff; 
-    border: none; 
-    padding: 10px 15px; 
-    cursor: pointer; 
+#metodoPago select {
+    padding: 10px; 
+    border: 1px solid #ccc; 
     border-radius: 5px; 
-    transition: background 0.3s;
+    width: 100%; 
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
 }
 
-button:hover { 
-    background: #e03e00; 
+#metodoPago select:focus {
+    border-color: #ff4c00; 
+    outline: none; 
 }
 
-#contenidoCarrito { 
-    margin-top: 20px; 
+#confirmarPagoBtn {
+    padding: 10px 15px; 
+    border: none; 
+    background: #ff4c00; 
+    color: white; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background 0.3s, transform 0.2s;
 }
 
-#metodoPago { 
-    margin-top: 40px; 
+#confirmarPagoBtn:hover {
+    background: #e04300; 
+    transform: scale(1.05);
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe; 
+    margin: 15% auto; 
+    padding: 20px; 
+    border: 1px solid #888; 
+    width: 80%; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.close {
+    color: #aaa; 
+    float: right; 
+    font-size: 28px; 
+    font-weight: bold; 
+}
+
+.close:hover,
+.close:focus {
+    color: black; 
+    text-decoration: none; 
+    cursor: pointer; 
 }
 
 footer { 
-    text-align: center; 
-    padding: 20px; 
-    background: rgba(17, 17, 17, 0.8); 
+    text-align: center;
+    background: #333; 
+    color: white; 
+    padding: 20px 0;
 }
 
-.contacto, .metodos-pago, .redes-sociales { 
-    margin: 20px 0; 
-}
-
-.redes-sociales a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-.redes-sociales a:hover {
-    text-decoration: underline;
+footer p {
+    margin: 5px 0;
 }
