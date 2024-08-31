@@ -1,11 +1,11 @@
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-let productos = []; // Inicializamos una variable para almacenar productos en el ámbito global
+let productos = []; 
 
 async function cargarProductos() {
     try {
-        const response = await axios.get('productos.json'); // Asegúrate de que la ruta sea correcta.
-        productos = response.data; // Guardamos los productos globalmente
-        return productos; // Retornamos los productos
+        const response = await axios.get('productos.json'); 
+        productos = response.data; 
+        return productos; 
     } catch (error) {
         console.error("Error al cargar los productos:", error);
         return [];
@@ -33,7 +33,7 @@ function eliminarDelCarrito(productId) {
     carrito = carrito.filter(item => item.id !== productId);
     localStorage.setItem('carrito', JSON.stringify(carrito));
     actualizarContadorCarrito();
-    mostrarContenidoCarrito(); // Actualizar el contenido del carrito
+    mostrarContenidoCarrito(); 
 }
 
 function mostrarContenidoCarrito() {
@@ -57,12 +57,11 @@ function mostrarContenidoCarrito() {
         `;
     });
 
-    // Asignar eventos de clic a los botones de eliminar
     const botonesEliminar = document.querySelectorAll('.eliminar-btn');
     botonesEliminar.forEach(boton => {
         boton.addEventListener('click', (event) => {
             const id = parseInt(event.target.getAttribute('data-id'));
-            eliminarDelCarrito(id); // Llama a la función con el ID del producto
+            eliminarDelCarrito(id); 
         });
     });
 }
@@ -88,12 +87,11 @@ function mostrarProductos(productos) {
         contenedorProductos.appendChild(div);
     });
     
-    // Asignar eventos de clic a los botones "Agregar al carrito"
     const botonesAgregar = document.querySelectorAll('.agregar-btn');
     botonesAgregar.forEach(boton => {
         boton.addEventListener('click', (event) => {
             const id = parseInt(event.target.getAttribute('data-id'));
-            agregarAlCarrito(id);  // Llama a la función con el ID del producto
+            agregarAlCarrito(id);  
         });
     });
 }
@@ -154,7 +152,6 @@ document.getElementById('confirmarPagoBtn').addEventListener('click', () => {
     alert(`Pago confirmado con el método: ${metodoSeleccionado}`);
 });
 
-// Cargar productos al inicio
 document.addEventListener('DOMContentLoaded', async () => {
     const productos = await cargarProductos();
     mostrarProductos(productos);
